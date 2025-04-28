@@ -127,6 +127,10 @@ celerybeat.pid
 # SageMath parsed files
 *.sage.py
 
+
+# Ignore virtual environment
+venv-xgb-flights/
+
 # Environments
 .env
 .venv
