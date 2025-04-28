@@ -1,0 +1,19 @@
+# Core libraries
+pandas
+numpy
+scikit-learn
+xgboost
+
+# Visualization
+matplotlib
+seaborn
+
+# Jupyter Lab for experimentation
+jupyterlab
+
+# Airflow (for orchestration)
+apache-airflow==2.9.0
+
+# Optional (can be helpful later)
+requests    # if you need to pull data via APIs
+joblib      # for model saving/loading
