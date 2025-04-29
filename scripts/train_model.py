@@ -20,6 +20,9 @@ def train():
         X, y, test_size=0.2, random_state=42
     )
 
+    X_test.to_csv('../data/test_data/X_test.csv', index=False)
+    y_test.to_csv('../data/test_data/y_test.csv', index=False)
+
     gbm_param_grid = {
         'colsample_bytree': [0.3, 0.7],
         'n_estimators': [50, 100],
@@ -32,7 +35,7 @@ def train():
 
     grid_mse = GridSearchCV(
         estimator=gbm,
-        param_grid=gbm_param_grid,
+        param_grid=gbm_param_grid, 
         scoring='neg_mean_squared_error',
         cv=4,
         verbose=1,
@@ -42,7 +45,7 @@ def train():
     grid_mse.fit(X_train, y_train)
 
     best_model = grid_mse.best_estimator_
-    test_rmse = float(np.sqrt(mean_squared_error(y_test, grid_mse.best_estimator_.predict(X_test))))
+    test_rmse = float(np.sqrt(mean_squared_error(y_test, best_model.predict(X_test))))
    
 
     print("\nBest Parameters: ", grid_mse.best_params_)
@@ -51,4 +54,5 @@ def train():
     return best_model
 
 if __name__ == "__main__":
-    train()
+    best_model = train()
+    save_model(best_model, '../models/xgb_best_model.pkl')
