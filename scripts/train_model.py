@@ -4,8 +4,8 @@ import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split, GridSearchCV
 from xgboost import XGBRegressor
-from scripts.preprocessing import load_data, preprocess_data
 from sklearn.metrics import mean_squared_error
+from preprocessing import load_data, preprocess_data
 
 def save_model(model, filename='../models/xgb_best_model.pkl'):
     os.makedirs(os.path.dirname(filename), exist_ok=True)
@@ -45,11 +45,9 @@ def train():
     grid_mse.fit(X_train, y_train)
 
     best_model = grid_mse.best_estimator_
-    test_rmse = float(np.sqrt(mean_squared_error(y_test, best_model.predict(X_test))))
    
 
     print("\nBest Parameters: ", grid_mse.best_params_)
-    print("\nTest RMSE: ", test_rmse)
 
     return best_model
 
