@@ -1,3 +1,6 @@
+import airflow
+print(airflow.__version__)  # Should print 2.9.0
+
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from datetime import datetime
@@ -22,7 +25,7 @@ default_args = {
 with DAG(
     dag_id='xgboost_regression_pipeline',
     default_args=default_args,
-    schedule_interval=None,  # Use None for manual trigger via Airflow UI. Change to '@daily' for daily schedule.
+    schedule=None,  # Use None for manual trigger via Airflow UI. Change to '@daily' for daily schedule.
     catchup=False,
     description='An end-to-end XGBoost regression pipeline using Airflow',
     tags=['xgboost', 'regression', 'pipeline'],
