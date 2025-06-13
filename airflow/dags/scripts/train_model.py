@@ -7,27 +7,37 @@ from xgboost import XGBRegressor
 from sklearn.metrics import mean_squared_error
 from preprocessing import load_data, preprocess_data
 
-def save_model(model, filename='../models/xgb_best_model.pkl'):
+def save_model(model, filename='/opt/airflow/models/xgb_best_model.pkl'):
     os.makedirs(os.path.dirname(filename), exist_ok=True)
     with open(filename, 'wb') as f:
         pickle.dump(model, f)
 
 def train():
-    df = load_data('../data/raw_data/flights_raw.csv')
+    DATA_PATH = '/opt/airflow/data/raw_data/flights_raw.csv'
+    df = load_data(DATA_PATH)
+    #df = load_data('../data/raw_data/flights_raw.csv')
     X, y = preprocess_data(df)
 
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.2, random_state=42
     )
 
-    X_test.to_csv('../data/test_data/X_test.csv', index=False)
-    y_test.to_csv('../data/test_data/y_test.csv', index=False)
+    X_test.to_csv('/opt/airflow/data/test_data/X_test.csv', index=False)
+    y_test.to_csv('/opt/airflow/data/test_data/y_test.csv', index=False)
+
+    # gbm_param_grid = {
+    #     'colsample_bytree': [0.3, 0.7],
+    #     'n_estimators': [50, 100],
+    #     'max_depth': [2, 5],
+    #     'learning_rate': [0.01, 0.1, 0.3],
+    #     'reg_alpha': [0, 0.1, 1]
+    # }
 
     gbm_param_grid = {
-        'colsample_bytree': [0.3, 0.7],
-        'n_estimators': [50, 100],
-        'max_depth': [2, 5],
-        'learning_rate': [0.01, 0.1, 0.3],
+        'colsample_bytree': [0.3],
+        'n_estimators': [50],
+        'max_depth': [2],
+        'learning_rate': [0.01, 0.1],
         'reg_alpha': [0, 0.1, 1]
     }
 
@@ -53,4 +63,4 @@ def train():
 
 if __name__ == "__main__":
     best_model = train()
-    save_model(best_model, '../models/xgb_best_model.pkl')
+    save_model(best_model, '/opt/airflow/models/xgb_best_model.pkl')

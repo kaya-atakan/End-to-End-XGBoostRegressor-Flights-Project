@@ -3,11 +3,11 @@ import pandas as pd
 from sklearn.metrics import mean_squared_error
 import numpy as np
 
-def load_model(filepath='../models/xgb_best_model.pkl'):
+def load_model(filepath='/opt/airflow/models/xgb_best_model.pkl'):
     with open(filepath, 'rb') as f:
         return pickle.load(f)
 
-def load_test_data(X_path='../data/test_data/X_test.csv', y_path='../data/test_data/y_test.csv'):
+def load_test_data(X_path='/opt/airflow/data/test_data/X_test.csv', y_path='/opt/airflow/data/test_data/y_test.csv'):
     X_test = pd.read_csv(X_path)
     y_test = pd.read_csv(y_path)
     return X_test, y_test
