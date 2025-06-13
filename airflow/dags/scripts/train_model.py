@@ -15,7 +15,6 @@ def save_model(model, filename='/opt/airflow/models/xgb_best_model.pkl'):
 def train():
     DATA_PATH = '/opt/airflow/data/raw_data/flights_raw.csv'
     df = load_data(DATA_PATH)
-    #df = load_data('../data/raw_data/flights_raw.csv')
     X, y = preprocess_data(df)
 
     X_train, X_test, y_train, y_test = train_test_split(
@@ -25,21 +24,14 @@ def train():
     X_test.to_csv('/opt/airflow/data/test_data/X_test.csv', index=False)
     y_test.to_csv('/opt/airflow/data/test_data/y_test.csv', index=False)
 
-    # gbm_param_grid = {
-    #     'colsample_bytree': [0.3, 0.7],
-    #     'n_estimators': [50, 100],
-    #     'max_depth': [2, 5],
-    #     'learning_rate': [0.01, 0.1, 0.3],
-    #     'reg_alpha': [0, 0.1, 1]
-    # }
-
     gbm_param_grid = {
-        'colsample_bytree': [0.3],
-        'n_estimators': [50],
-        'max_depth': [2],
-        'learning_rate': [0.01, 0.1],
+        'colsample_bytree': [0.3, 0.7],
+        'n_estimators': [50, 100],
+        'max_depth': [2, 5],
+        'learning_rate': [0.01, 0.1, 0.3],
         'reg_alpha': [0, 0.1, 1]
     }
+
 
     gbm = XGBRegressor(random_state=42)
 
